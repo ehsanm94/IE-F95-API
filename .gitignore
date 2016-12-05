@@ -1,0 +1,6 @@
+.env
+.htaccess
+.phpintel/
+config.js
+vendor/
+public/src/plugins/bower/

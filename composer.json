@@ -1,0 +1,20 @@
+{
+	"name": "ehsanm94/zaferoon",
+	"type": "project",
+	"authors": [
+		{
+			"name": "Ehsan Mokhtari",
+			"email": "ehsanm94@gmail.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"App\\": "app/"
+		}
+	},
+	"require": {           
+		"ehsanm94/zardak": "dev-master",
+		"ehsanm94/damev" : "dev-master",
+		"vlucas/phpdotenv": "^2.4"
+	}
+}
