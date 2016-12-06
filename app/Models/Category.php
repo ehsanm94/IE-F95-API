@@ -16,8 +16,7 @@ class Category extends Model
 
     public static function getAll()
     {
-        return Model::queryOn('games_categories, categories')
-            ->constraint('categories.id', 'games_categories.category_id')
-            ->get('categories.id as id, categories.name as name');
+        return Model::queryOn(self::$table)
+            ->get();
     }
 }

@@ -19,19 +19,20 @@ class Category
     }
 
     public function sendXML() {
-        $response = new Response(array('categories' => $this->getXMLArray()));
+        $response = new Response($this->getXMLArray());
         $response->sendResponseAsXML();
     }
 
 
     public function getXMLArray() {
         $obj = array();
+        $obj['category'] = array();
 
         foreach ($this->categories as $category) {
-            $obj[] = $category->getName();
+            $obj['category'][] = $category->getName();
         }
 
-        return array('category' => $obj);
+        return array('categories' => $obj);
     }
 
     public function getJSONArray() {
@@ -41,6 +42,6 @@ class Category
             $obj[] = $category->getName();
         }
 
-        return $obj;
+        return array('categories' => $obj);
     }
 }

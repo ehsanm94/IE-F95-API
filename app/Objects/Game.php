@@ -39,9 +39,8 @@ class Game
 
             $categoryModel = CategoryModel::getCategories($game->getId());
             $categories = new Category($categoryModel);
-            $item['categories'] = $categories->getXMLArray();
 
-            $obj[] = $item;
+            $obj[] = array_merge($item, $categories->getXMLArray());
         }
         return array ('game' => $obj);
     }
@@ -61,9 +60,8 @@ class Game
 
             $categoryModel = CategoryModel::getCategories($game->getId());
             $categories = new Category($categoryModel);
-            $item['categories'] = $categories->getJSONArray();
 
-            $obj[] = $item;
+            $obj[] = array_merge($item, $categories->getJSONArray());
         }
 
         return $obj;
