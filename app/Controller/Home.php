@@ -41,14 +41,14 @@ class Home extends Controller
         if (in_array($page, $game_entries)) {
             if (isset($_GET['q']) && !empty($_GET['q'])) {
                 
-                $games = $this->searchGamesByKeyword($_GET['q']);
-                $r = new Response($games);
+                $games_model = Game::getSimilarGames($_GET['q']);
+                $games = new GameObject($games_model);
 
                 if($page == $game_entries[1]) {
-                    $r->sendResponseAsXML();
+                    $games->sendXML();
                 }
                 else {
-                    $r->sendResponseAsJson();
+                    $games->sendJSON();
                 }
             }
             else {
