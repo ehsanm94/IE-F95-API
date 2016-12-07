@@ -37,7 +37,7 @@ class Comment
 
                 $player_model = PlayerModel::getPlayerById($comment->getPlayerId());
                 $player = new Player($player_model);
-                $item['player'] = $player->getJSONArray();
+                $item['player'] = $player->getXMLArray();
 
                 $game_model = GameModel::getGamesById($comment->getGameId());
                 $game = new Game($game_model);
