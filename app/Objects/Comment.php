@@ -15,12 +15,12 @@ class Comment
     }
 
     public function sendJSON() {
-        $response = new Response($this->getJSONArray());
+        $response = new Response(array('comments' => $this->getJSONArray()));
         $response->sendResponseAsJson();
     }
 
     public function sendXML() {
-        $response = new Response($this->getXMLArray());
+        $response = new Response(array('comments' => $this->getXMLArray()));
         $response->sendResponseAsXML();
     }
 

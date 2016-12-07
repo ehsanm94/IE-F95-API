@@ -75,30 +75,17 @@ class Home extends Controller
         if (!$game_title && !$fragment)
             $this->index('games');
 
-        if ($fragment == 'header.xml' || $fragment == 'header' || $fragment == 'header.json') {
-            /**
-             * game {game_title, image, rate, #comments, categories {name}, }
-             */
+        if (
+            $fragment == 'header.xml' || $fragment == 'header' || $fragment == 'header.json' ||
+            $fragment == 'info.xml' || $fragment == 'info' || $fragment == 'info.json'
+        ) {
             $game_model = Game::getGamesByName($game_title);
             $game = new GameObject($game_model);
-            if ($fragment == 'header' || $fragment == 'header.json') {
+            if ($fragment == 'header' || $fragment == 'header.json' || $fragment == 'info' || $fragment == 'info.json') {
                 $game->sendJSON();
             }
             else {
                 $game->sendXML();
-            }
-        }
-
-        if ($fragment == 'info.xml' || $fragment == 'info' || $fragment == 'info.json') {
-            /**
-             * text
-             */
-            $r = new Response($games);
-            if ($fragment == 'info' || $fragment == 'info.json') {
-                $r->sendResponseAsJson();
-            }
-            else {
-                $r->sendResponseAsXML();
             }
         }
 
@@ -116,15 +103,17 @@ class Home extends Controller
         }
 
         if ($fragment == 'comments.xml' || $fragment == 'comments' || $fragment == 'comments.json') {
-            /**
-             * comments { game {}, comment {date, rate, text, player {avatar, name}}, #comments}
-             */
-            $r = new Response($games);
+            $offset = 0;
+            if (isset($_GET['offset']) && !empty($_GET['offset'])) {
+                $offset = intval($_GET['offset']);
+            }
+            $comment_model = Comment::getCommentsByGameName($game_title, $offset);
+            $comments = new CommentObject($comment_model);
             if ($fragment == 'comments' || $fragment == 'comments.json') {
-                $r->sendResponseAsJson();
+                $comments->sendJSON();
             }
             else {
-                $r->sendResponseAsXML();
+                $comments->sendXML();
             }
         }
 
@@ -155,13 +144,6 @@ class Home extends Controller
         }
 
         $this->badRequest($fragment);
-    }
-
-    private function searchGamesByKeyword($keyword) {
-        /**
-         * search { game {game_title, image, rate, #comments, categories {name}, } }
-         */
-        return array('key' => $keyword);
     }
 
     private function badRequest($page, $message = null) {

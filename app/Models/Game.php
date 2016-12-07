@@ -27,7 +27,15 @@ class Game extends Model
 
 	public static function getGamesByName($game_title)
 	{
-//		echo $game_title; die();
 		return Model::raw("SELECT * FROM (SELECT games.id as game_id, COUNT(comments.game_id) as comments FROM comments RIGHT OUTER JOIN games ON games.id = comments.game_id GROUP BY games.id) as t1 RIGHT OUTER JOIN games on t1.game_id = games.id WHERE games.title = '$game_title'");
+	}
+
+	public static function getGameIdByName($game_title)
+	{
+		$game = Model::queryOn(self::$table)
+			->where('title', $game_title)
+			->first()
+			->get();
+		return $game->getId();
 	}
 }
