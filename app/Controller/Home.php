@@ -1,20 +1,20 @@
 <?php
 namespace App\Controller;
 
-use App\Models\Gallery;
-use App\Models\Leaderboard;
-use App\Objects\Gallery as GalleryObject;
-use Zardak\Controller;
 use App\Error;
-use App\Response;
-use App\Models\Game;
-use App\Models\Comment;
 use App\Models\Category;
-use App\Objects\Game as GameObject;
-use App\Objects\Comment as CommentObject;
-use App\Objects\Homepage as HomepageObject;
+use App\Models\Comment;
+use App\Models\Leaderboard;
+use App\Models\Gallery;
+use App\Models\Game;
 use App\Objects\Category as CategoryObject;
+use App\Objects\Comment as CommentObject;
+use App\Objects\Gallery as GalleryObject;
+use App\Objects\Game as GameObject;
+use App\Objects\Homepage as HomepageObject;
 use App\Objects\Leaderboard as LeaderboardObject;
+use App\Response;
+use Zardak\Controller;
 
 class Home extends Controller
 {
@@ -91,9 +91,6 @@ class Home extends Controller
         }
 
         if ($fragment == 'leaderboard.xml' || $fragment == 'leaderboard' || $fragment == 'leaderboard.json') {
-            /**
-             * leaderboard { game {} , player {name, avatar, record {place, score, displacement}}}
-             */
             $leaderboard_model = Leaderboard::getLeaderboard($game_title);
             $leaderboard = new LeaderboardObject($leaderboard_model);
             if ($fragment == 'leaderboard' || $fragment == 'leaderboard.json') {
@@ -120,9 +117,6 @@ class Home extends Controller
         }
 
         if ($fragment == 'related_games.xml' || $fragment == 'related_games' || $fragment == 'related_games.json') {
-            /**
-             * game {game_title, image, rate, #comments, categories {name}, }
-             */
             $games_model = Game::getRelatedGamesByName($game_title);
             $game = new GameObject($games_model);
             if ($fragment == 'related_games' || $fragment == 'related_games.json') {
@@ -134,9 +128,6 @@ class Home extends Controller
         }
 
         if ($fragment == 'gallery.xml' || $fragment == 'gallery' || $fragment == 'gallery.json') {
-            /**
-             * gallery {title, view, type, url}
-             */
             $resources = Gallery::items($game_title);
             $gallery = new GalleryObject($resources);
             if ($fragment == 'gallery' || $fragment == 'gallery.json') {
@@ -160,14 +151,3 @@ class Home extends Controller
         }
     }
 }
-
-/**
- * All objects:
- *      + game {title, abstract, info, big_image, small_image. categories{}, #comments}
- *      + category {name}
- *      + player {name, avatar}
- *      + gallery: resources{title, views, type, url}
- *      + comment {palyer{}, game_title, rate, date, text}
- *      + leaderboard : records {player{}, level, score, displacement}
- *      + toturial {name, date, image, game_title}
- */
