@@ -72,7 +72,6 @@ class Home extends Controller
     }
 
     public function games($game_title = null, $fragment = null) {
-        
         if (!$game_title && !$fragment)
             $this->index('games');
 
@@ -80,12 +79,13 @@ class Home extends Controller
             /**
              * game {game_title, image, rate, #comments, categories {name}, }
              */
-            $r = new Response($games);
+            $game_model = Game::getGamesByName($game_title);
+            $game = new GameObject($game_model);
             if ($fragment == 'header' || $fragment == 'header.json') {
-                $r->sendResponseAsJson();
+                $game->sendJSON();
             }
             else {
-                $r->sendResponseAsXML();
+                $game->sendXML();
             }
         }
 
