@@ -1,7 +1,6 @@
 <?php
 namespace App\Objects;
 
-use App\Models\Category as GameModel;
 use App\Response;
 
 class Category
