@@ -1,6 +1,8 @@
 <?php
 namespace App\Controller;
 
+use App\Models\Gallery;
+use App\Objects\Gallery as GalleryObject;
 use App\Objects\HomePage;
 use Zardak\Controller;
 use App\Error;
@@ -134,12 +136,13 @@ class Home extends Controller
             /**
              * gallery {title, view, type, url}
              */
-            $r = new Response($games);
+            $resources = Gallery::items($game_title);
+            $gallery = new GalleryObject($resources);
             if ($fragment == 'gallery' || $fragment == 'gallery.json') {
-                $r->sendResponseAsJson();
+                $gallery->sendJSON();
             }
             else {
-                $r->sendResponseAsXML();
+                $gallery->sendXML();
             }
         }
 

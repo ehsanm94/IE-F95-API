@@ -27,42 +27,47 @@ class Comment
 
     public function getXMLArray() {
         $obj = array();
-        $obj['comment'] = array();
-        foreach ($this->comments as $comment) {
-            $item = array();
-            $item['text'] = $comment->getText();
-            $item['rate'] = $comment->getRate();
-            $item['date'] = $comment->getDate();
+        if ($this->comments) {
+            $obj['comment'] = array();
+            foreach ($this->comments as $comment) {
+                $item = array();
+                $item['text'] = $comment->getText();
+                $item['rate'] = $comment->getRate();
+                $item['date'] = $comment->getDate();
 
-            $player_model = PlayerModel::getPlayerById($comment->getPlayerId());
-            $player = new Player($player_model);
-            $item['player'] = $player->getJSONArray();
+                $player_model = PlayerModel::getPlayerById($comment->getPlayerId());
+                $player = new Player($player_model);
+                $item['player'] = $player->getJSONArray();
 
-            $game_model = GameModel::getGamesById($comment->getGameId());
-            $game = new Game($game_model);
+                $game_model = GameModel::getGamesById($comment->getGameId());
+                $game = new Game($game_model);
 
-            $obj['comment'][] = array_merge($item, $game->getXMLArray());
+                $obj['comment'][] = array_merge($item, $game->getXMLArray());
+            }
         }
         return $obj;
     }
 
     public function getJSONArray() {
         $obj = array();
-        foreach ($this->comments as $comment) {
-            $item = array();
-            $item['text'] = $comment->getText();
-            $item['rate'] = $comment->getRate();
-            $item['date'] = $comment->getDate();
+        if ($this->comments) {
+            foreach ($this->comments as $comment) {
+                $item = array();
+                $item['text'] = $comment->getText();
+                $item['rate'] = $comment->getRate();
+                $item['date'] = $comment->getDate();
 
-            $player_model = PlayerModel::getPlayerById($comment->getPlayerId());
-            $player = new Player($player_model);
-            $item['player'] = $player->getJSONArray();
+                $player_model = PlayerModel::getPlayerById($comment->getPlayerId());
+                $player = new Player($player_model);
+                $item['player'] = $player->getJSONArray();
 
-            $game_model = GameModel::getGamesById($comment->getGameId());
-            $game = new Game($game_model);
-            $item['game'] = $game->getJSONArray();
+                $game_model = GameModel::getGamesById($comment->getGameId());
+                $game = new Game($game_model);
+                $game_array = $game->getJSONArray();
+                $item['game'] = $game_array[0];
 
-            $obj[] = $item;
+                $obj[] = $item;
+            }
         }
         return $obj;
     }

@@ -53,7 +53,8 @@ class Tutorial
 
             $game_model = GameModel::getGamesById($tutorial->getGameId());
             $game = new Game($game_model);
-            $item['game'] = $game->getJSONArray();
+            $game_array = $game->getJSONArray();
+            $item['game'] = $game_array[0];
 
             $obj[] = $item;
         }

@@ -17,12 +17,16 @@ class Comment extends Model
 	public static function getCommentsByGameName($game_title, $offset = 0)
 	{
 		$limit = $offset == 0 ? 3 : mt_rand(1,3);
-		$game_id = Game::getGameIdByName($game_title);
-		return Model::queryOn(self::$table)
-			->where('game_id', $game_id)
-			->orderBy('id', 'DESC')
-			->limit($limit)
-			->offset($offset)
-			->get();
+		if ($game_id = Game::getGameIdByName($game_title)) {
+			return Model::queryOn(self::$table)
+				->where('game_id', $game_id)
+				->orderBy('id', 'DESC')
+				->limit($limit)
+				->offset($offset)
+				->get();
+		}
+		else {
+			return null;
+		}
 	}
 }

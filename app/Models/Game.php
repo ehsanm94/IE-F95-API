@@ -36,6 +36,9 @@ class Game extends Model
 			->where('title', $game_title)
 			->first()
 			->get();
-		return $game->getId();
+		if ($game) {
+			return $game->getId();
+		}
+		return null;
 	}
 }
