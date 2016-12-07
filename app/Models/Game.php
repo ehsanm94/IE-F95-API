@@ -41,4 +41,10 @@ class Game extends Model
 		}
 		return null;
 	}
+
+	public static function getRelatedGamesByName($game_title)
+	{
+		$game_id = self::getGameIdByName($game_title);
+		return Model::raw("SELECT * FROM (SELECT games.id as game_id, COUNT(comments.game_id) as comments FROM comments RIGHT OUTER JOIN games ON games.id = comments.game_id GROUP BY games.id) as t1 RIGHT OUTER JOIN games on t1.game_id = games.id JOIN related_games ON related_games.related_game = games.id WHERE related_games.game_id = ?", array($game_id));
+	}
 }

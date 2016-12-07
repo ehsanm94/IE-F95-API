@@ -123,12 +123,13 @@ class Home extends Controller
             /**
              * game {game_title, image, rate, #comments, categories {name}, }
              */
-            $r = new Response($games);
+            $games_model = Game::getRelatedGamesByName($game_title);
+            $game = new GameObject($games_model);
             if ($fragment == 'related_games' || $fragment == 'related_games.json') {
-                $r->sendResponseAsJson();
+                $game->sendJSON();
             }
             else {
-                $r->sendResponseAsXML();
+                $game->sendXML();
             }
         }
 
