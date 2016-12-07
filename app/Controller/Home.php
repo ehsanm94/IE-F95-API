@@ -2,20 +2,19 @@
 namespace App\Controller;
 
 use App\Models\Gallery;
+use App\Models\Leaderboard;
 use App\Objects\Gallery as GalleryObject;
-use App\Objects\HomePage;
 use Zardak\Controller;
 use App\Error;
 use App\Response;
 use App\Models\Game;
 use App\Models\Comment;
 use App\Models\Category;
-use App\Models\Player;
-use App\Models\Tutorial;
 use App\Objects\Game as GameObject;
 use App\Objects\Comment as CommentObject;
 use App\Objects\Homepage as HomepageObject;
 use App\Objects\Category as CategoryObject;
+use App\Objects\Leaderboard as LeaderboardObject;
 
 class Home extends Controller
 {
@@ -95,12 +94,13 @@ class Home extends Controller
             /**
              * leaderboard { game {} , player {name, avatar, record {place, score, displacement}}}
              */
-            $r = new Response($games);
+            $leaderboard_model = Leaderboard::getLeaderboard($game_title);
+            $leaderboard = new LeaderboardObject($leaderboard_model);
             if ($fragment == 'leaderboard' || $fragment == 'leaderboard.json') {
-                $r->sendResponseAsJson();
+                $leaderboard->sendJSON();
             }
             else {
-                $r->sendResponseAsXML();
+                $leaderboard->sendXML();
             }
         }
 
