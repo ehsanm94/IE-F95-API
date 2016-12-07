@@ -24,27 +24,50 @@ class Gallery
 
 
     public function getXMLArray() {
-        return $this->getJSONArray();
-    }
-
-    public function getJSONArray() {
         $obj = array();
         if ($this->resources) {
-            $obj['image'] = array();
-            $obj['video'] = array();
+            $obj['images'] = array();
+            $obj['videos'] = array();
+            $obj['images']['image'] = array();
+            $obj['videos']['video'] = array();
             foreach ($this->resources as $resource) {
                 $item = array();
                 if ($resource->getType() == 0) {
                     $item['title'] = $resource->getTitle();
                     $item['views'] = $resource->getViews();
                     $item['url'] = $resource->getUrl();
-                    $obj['image'][] = $item;
+                    $obj['images']['image'][] = $item;
                 }
                 else if ($resource->getType() == 1) {
                     $item['title'] = $resource->getTitle();
                     $item['views'] = $resource->getViews();
                     $item['url'] = $resource->getUrl();
-                    $obj['video'][] = $item;
+                    $obj['videos']['video'][] = $item;
+                }
+            }
+        }
+
+        return array('gallery' => $obj);
+    }
+
+    public function getJSONArray() {
+        $obj = array();
+        if ($this->resources) {
+            $obj['images'] = array();
+            $obj['videos'] = array();
+            foreach ($this->resources as $resource) {
+                $item = array();
+                if ($resource->getType() == 0) {
+                    $item['title'] = $resource->getTitle();
+                    $item['views'] = $resource->getViews();
+                    $item['url'] = $resource->getUrl();
+                    $obj['images'][] = $item;
+                }
+                else if ($resource->getType() == 1) {
+                    $item['title'] = $resource->getTitle();
+                    $item['views'] = $resource->getViews();
+                    $item['url'] = $resource->getUrl();
+                    $obj['videos'][] = $item;
                 }
             }
         }
