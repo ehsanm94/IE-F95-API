@@ -84,10 +84,10 @@ class Home extends Controller
             $game_model = Game::getGamesByName($game_title);
             $game = new GameObject($game_model);
             if ($fragment == 'header' || $fragment == 'header.json' || $fragment == 'info' || $fragment == 'info.json') {
-                $game->sendJSON();
+                $game->sendJSON(true);
             }
             else {
-                $game->sendXML();
+                $game->sendXML(true);
             }
         }
 

@@ -13,13 +13,19 @@ class Game
         $this->games = $games;
     }
 
-    public function sendJSON() {
-        $response = new Response(array ('games' => $this->getJSONArray()));
+    public function sendJSON($single = false) {
+        $response_array = $this->getJSONArray();
+        if ($single) {
+            $response_array['game'] = array_pop($response_array);
+        }
+        $response_array = $single ? $response_array : array ('games' => $response_array);
+        $response = new Response($response_array);
         $response->sendResponseAsJson();
     }
 
-    public function sendXML() {
-        $response = new Response(array('games' => $this->getXMLArray()));
+    public function sendXML($single = false) {
+        $response_array = $single ? $this->getXMLArray() : array ('games' => $this->getXMLArray());
+        $response = new Response($response_array);
         $response->sendResponseAsXML();
     }
 
@@ -67,9 +73,6 @@ class Game
             $obj[] = array_merge($item, $categories->getJSONArray());
         }
 
-//        if (count($obj) == 1) {
-//            $obj = $obj[0];
-//        }
         return $obj;
     }
 }
