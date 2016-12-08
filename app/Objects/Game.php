@@ -41,8 +41,9 @@ class Game
                 $item['title']                  = $game->getTitle();
                 $item['abstract']               = $game->getAbstract();
                 $item['info']                   = $game->getInfo();
+                $item['rate']                   = $game->getRate();
                 $item['number_of_comments']     = $game->getComments();
-                $item['big_image']              = $game->getBigImage();
+                $item['large_image']            = $game->getBigImage();
                 $item['small_image']            = $game->getSmallImage();
 
                 $categoryModel = CategoryModel::getCategories($game->getId());
@@ -63,8 +64,9 @@ class Game
             $item['title']                = $game->getTitle();
             $item['abstract']             = $game->getAbstract();
             $item['info']                 = $game->getInfo();
-            $item['number_of_comments']   = $game->getComments();
-            $item['big_image']            = $game->getBigImage();
+            $item['rate']                   = $game->getRate();
+            $item['number_of_comments']   = intval($game->getComments());
+            $item['large_image']          = $game->getBigImage();
             $item['small_image']          = $game->getSmallImage();
 
             $categoryModel = CategoryModel::getCategories($game->getId());
