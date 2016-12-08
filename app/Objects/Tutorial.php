@@ -1,6 +1,7 @@
 <?php
 namespace App\Objects;
 
+use Damev\Damev;
 use App\Models\Game as GameModel;
 use App\Response;
 
@@ -31,7 +32,7 @@ class Tutorial
             $item = array();
 
             $item['title']       = $tutorial->getTitle();
-            $item['date']        = $tutorial->getDate();
+            $item['date']        = Damev::getJDate($tutorial->getDate());
 
             $game_model = GameModel::getGamesById($tutorial->getGameId());
             $game = new Game($game_model);
@@ -49,7 +50,7 @@ class Tutorial
             $item = array();
 
             $item['title']       = $tutorial->getTitle();
-            $item['date']        = $tutorial->getDate();
+            $item['date']        = Damev::getJDate($tutorial->getDate());
 
             $game_model = GameModel::getGamesById($tutorial->getGameId());
             $game = new Game($game_model);

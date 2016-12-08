@@ -1,6 +1,7 @@
 <?php
 namespace App\Objects;
 
+use Damev\Damev;
 use App\Models\Player as PlayerModel;
 use App\Models\Game as GameModel;
 use App\Response;
@@ -33,7 +34,7 @@ class Comment
                 $item = array();
                 $item['text'] = $comment->getText();
                 $item['rate'] = $comment->getRate();
-                $item['date'] = $comment->getDate();
+                $item['date'] = Damev::getJDate($comment->getDate());
 
                 $player_model = PlayerModel::getPlayerById($comment->getPlayerId());
                 $player = new Player($player_model);
@@ -54,8 +55,8 @@ class Comment
             foreach ($this->comments as $comment) {
                 $item = array();
                 $item['text'] = $comment->getText();
-                $item['rate'] = $comment->getRate();
-                $item['date'] = $comment->getDate();
+                $item['rate'] = intval($comment->getRate());
+                $item['date'] = Damev::getJDate($comment->getDate());
 
                 $player_model = PlayerModel::getPlayerById($comment->getPlayerId());
                 $player = new Player($player_model);
