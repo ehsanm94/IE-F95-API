@@ -37,20 +37,22 @@ class Homepage
     }
 
     public function getXMLArray() {
-        return array(
+        $homepage = array(
             'slider'    => $this->slider_items->getXMLArray(),
             'new_games' => $this->new_games->getXMLArray(),
             'comments'  => $this->comments->getXMLArray(),
             'tutorials' => $this->tutorials->getXMLArray(),
         );
+        return array('homepage' => $homepage);
     }
 
     public function getJSONArray() {
-        return array(
+        $homepage = array(
             'slider'    => $this->slider_items->getJSONArray(),
             'new_games' => $this->new_games->getJSONArray(),
             'comments'  => $this->comments->getJSONArray(),
             'tutorials' => $this->tutorials->getJSONArray(),
         );
+        return array('homepage' => $homepage);
     }
 }
