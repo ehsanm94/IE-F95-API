@@ -49,9 +49,9 @@ class Leaderboard
         if ($this->leaderboard) {
             foreach ($this->leaderboard as $lead) {
                 $item = array();
-                $item['score'] = $lead->getScore();
-                $item['level'] = $lead->getLevel();
-                $item['displacement'] = $lead->getDisplacement();
+                $item['score'] = intval($lead->getScore());
+                $item['level'] = intval($lead->getLevel());
+                $item['displacement'] = intval($lead->getDisplacement());
 
                 $player_model = PlayerModel::getPlayerById($lead->getPlayerId());
                 $player = new Player($player_model);
