@@ -3,21 +3,21 @@ namespace App\Controller;
 
 use \Zardak\Template;
 
-class PageNotFound
+class Docs
 {
     public static function index()
     {
-
-    	$views_chain = array(
-            '404',
+        $views_chain = array(
+            'docs',
             'base' => array(
-                'title' => 'صفحه یافت نشد!',
+                'resources' => array(
+                    'style/css/docs.css',
+                ),
+                'title' => 'Amirkabir Studio API Documents'
             ),
         );
         $tpl = new Template($views_chain);
         $tpl->render();
-
-        header("HTTP/1.0 404 Not Found");
         exit();
     }
 }
