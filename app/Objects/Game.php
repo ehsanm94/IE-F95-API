@@ -58,21 +58,24 @@ class Game
     public function getJSONArray() {
         $obj = array();
 
-        foreach ($this->games as $game) {
-            $item = array();
+        if ($this->games)
+        {
+            foreach ($this->games as $game) {
+                $item = array();
 
-            $item['title']                = $game->getTitle();
-            $item['abstract']             = $game->getAbstract();
-            $item['info']                 = $game->getInfo();
-            $item['rate']                   = $game->getRate();
-            $item['number_of_comments']   = intval($game->getComments());
-            $item['large_image']          = $game->getBigImage();
-            $item['small_image']          = $game->getSmallImage();
+                $item['title']                = $game->getTitle();
+                $item['abstract']             = $game->getAbstract();
+                $item['info']                 = $game->getInfo();
+                $item['rate']                   = $game->getRate();
+                $item['number_of_comments']   = intval($game->getComments());
+                $item['large_image']          = $game->getBigImage();
+                $item['small_image']          = $game->getSmallImage();
 
-            $categoryModel = CategoryModel::getCategories($game->getId());
-            $categories = new Category($categoryModel);
+                $categoryModel = CategoryModel::getCategories($game->getId());
+                $categories = new Category($categoryModel);
 
-            $obj[] = array_merge($item, $categories->getJSONArray());
+                $obj[] = array_merge($item, $categories->getJSONArray());
+            }
         }
 
         return $obj;

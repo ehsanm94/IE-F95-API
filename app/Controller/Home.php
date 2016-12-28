@@ -11,10 +11,12 @@ use App\Objects\Category as CategoryObject;
 use App\Objects\Comment as CommentObject;
 use App\Objects\Gallery as GalleryObject;
 use App\Objects\Game as GameObject;
+use App\Objects\GamesList as GamesListObject;
 use App\Objects\Homepage as HomepageObject;
 use App\Objects\Leaderboard as LeaderboardObject;
 use App\Response;
 use Zardak\Controller;
+use Zardak\Template;
 
 class Home extends Controller
 {
@@ -66,6 +68,39 @@ class Home extends Controller
             }
             else {
                 $categories->sendJSON();
+            }
+        }
+
+        $games_list_entries = array('games_list', 'games_list.xml', 'games_list.json');
+        if (in_array($page, $games_list_entries)) {
+            if (!isset($_POST['filters']) || empty($_POST['filters'])) {
+                $this->badRequest($page, "You must send 'filters' parameter via POST request to this API!");
+            }
+
+            $filters = json_decode($_POST['filters'], true);
+
+            if (!isset($filters['rates'])) {
+                $this->badRequest($page, "filters must have 'rates' index");
+            }
+            
+            if (!isset($filters['categories'])) {
+                $this->badRequest($page, "filters must have 'categories' index");
+            }
+
+            $offset = 0;
+            if (isset($_GET['offset']) && !empty($_GET['offset'])) {
+                $offset = intval($_GET['offset']);
+            }
+
+            $games_model = Game::getGamesList($filters, $offset);
+            $count_game_list = Game::countGameList($filters);
+            $games = new GamesListObject($games_model, $count_game_list);
+
+            if($page == $games_list_entries[1]) {
+                $games->sendXML();
+            }
+            else {
+                $games->sendJSON();
             }
         }
     
@@ -149,5 +184,14 @@ class Home extends Controller
         else {
             $r->sendResponseAsJson();
         }
+    }
+
+    public function test() {
+        $chain = array(
+            'home',
+            'base'
+        );
+        $tpl = new Template($chain);
+        $tpl->render();
     }
 }

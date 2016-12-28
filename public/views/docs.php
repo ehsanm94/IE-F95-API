@@ -32,12 +32,12 @@
                     </tr>
                     <tr>
                         <td>games</td>
-                        <td>array of <a href="docs#game">Game</a></td>
+                        <td>Array of <a href="docs#game">Game</a></td>
                         <td><span class="italic">Optional.</span> represents an array of games.</td>
                     </tr>
                     <tr>
                         <td>comments</td>
-                        <td>array of <a href="docs#comment">Comment</a></td>
+                        <td>Array of <a href="docs#comment">Comment</a></td>
                         <td><span class="italic">Optional.</span> represents an array of comments.</td>
                     </tr>
                     <tr>
@@ -52,8 +52,13 @@
                     </tr>
                     <tr>
                         <td>leaderboard</td>
-                        <td>array of <a href="record">Record</a></td>
+                        <td>Array of <a href="record">Record</a></td>
                         <td><span class="italic">Optional.</span> represents players records in specific game.</td>
+                    </tr>
+                    <tr>
+                        <td>games_list</td>
+                        <td><a href="docs#games_list">GamesList</a></td>
+                        <td><span class="italic">Optional.</span> represents details of a specific game.</td>
                     </tr>
                 </tbody>
             </table>
@@ -78,17 +83,17 @@
                 <tbody>
                 <tr>
                     <td>slider</td>
-                    <td>array of <a href="docs#game">Game</a></td>
+                    <td>Array of <a href="docs#game">Game</a></td>
                     <td>Represents an array of games.</td>
                 </tr>
                 <tr>
                     <td>new_games</td>
-                    <td>array of <a href="docs#game">Game</a></td>
+                    <td>Array of <a href="docs#game">Game</a></td>
                     <td>Represents an array of games.</td>
                 </tr>
                 <tr>
                     <td>comments</td>
-                    <td>array of <a href="docs#comment">Comment</a></td>
+                    <td>Array of <a href="docs#comment">Comment</a></td>
                     <td>Represents an array of comments.</td>
                 </tr>
                 <tr>
@@ -149,7 +154,7 @@
                 </tr>
                 <tr>
                     <td>categories</td>
-                    <td>array of <a href="docs#category">Category</a></td>
+                    <td>Array of <a href="docs#category">Category</a></td>
                     <td>represents an array consisting of game's categories</td>
                 </tr>
                 </tbody>
@@ -223,6 +228,32 @@
                     <td>game</td>
                     <td><a href="docs#game">Game</a></td>
                     <td>The game that the comment left on.</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4 class="sub-title" id="games_list">GamesList</h4>
+        <div class="desc">
+            This object represents a list of games according to specific filters. <br>
+            <table class="api">
+                <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Type</th>
+                    <th>Description</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>count</td>
+                    <td>Integer</td>
+                    <td>number of games with specific filters.</td>
+                </tr>
+                <tr>
+                    <td>games</td>
+                    <td>Array of <a href="docs#game">Game</a></td>
+                    <td>Array of games with specific filters.</td>
                 </tr>
                 </tbody>
             </table>
@@ -325,12 +356,12 @@
                 <tbody>
                 <tr>
                     <td>images</td>
-                    <td>array of <a href="docs#imgvid">Image</a></td>
+                    <td>Array of <a href="docs#imgvid">Image</a></td>
                     <td>Game's images</td>
                 </tr>
                 <tr>
                     <td>videos</td>
-                    <td>array of <a href="docs#imgvid">Video</a></td>
+                    <td>Array of <a href="docs#imgvid">Video</a></td>
                     <td>Game's videos</td>
                 </tr>
                 </tbody>
@@ -389,6 +420,28 @@
                     <li>XML: <a href="<?php echo getenv('URL') ?>games.xml?q=2"><?php echo getenv('URL') ?>games.xml?q=2</a></li>
                     <li>JSON: <a href="<?php echo getenv('URL') ?>games.json?q=2"><?php echo getenv('URL') ?>games.json?q=2</a></li>
                 </ul>
+            </li>
+        </ul>
+    </div>
+
+    <h3 class="title" id="how-to-work-with-games-list-api">How to send create and send request for games_list API?</h3>
+    <div class="desc">
+        You should create a 'filters' object in JS and POST it to the games_list API. It should have following format: <br>
+        <pre>
+var filters = {
+    rates: [],
+    categories: []
+}</pre>
+        <ul>
+            <li>JSON API: <?php echo getenv('URL') ?>games_list.json?offset=&lt;offset&gt;</li>
+            <li>XML API: <?php echo getenv('URL') ?>games_list.xml?offset=&lt;offset&gt;</li>
+        </ul>
+        <ul>
+            <li>Usefull links
+            <ul>
+                <li><a href="https://laracasts.com/discuss/channels/general-discussion/how-can-i-send-a-jquery-object-via-post">how can i send a jquery object via post</a></li>
+                <li><a href="http://stackoverflow.com/questions/4255848/javascript-pass-object-via-post">javascript pass object via post</a></li>
+            <ul>
             </li>
         </ul>
     </div>
