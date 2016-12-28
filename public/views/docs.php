@@ -424,7 +424,7 @@
         </ul>
     </div>
 
-    <h3 class="title" id="how-to-work-with-games-list-api">How to send create and send request for games_list API?</h3>
+    <h3 class="title" id="how-to-work-with-games-list-api">How to create and send request for games_list API?</h3>
     <div class="desc">
         You should create a 'filters' object in JS and POST it to the games_list API. It should have following format: <br>
         <pre>
@@ -437,7 +437,7 @@ var filters = {
             <li>XML API: <?php echo getenv('URL') ?>games_list.xml?offset=&lt;offset&gt;</li>
         </ul>
         <ul>
-            <li>Usefull links
+            <li>Usefull links:
             <ul>
                 <li><a href="https://laracasts.com/discuss/channels/general-discussion/how-can-i-send-a-jquery-object-via-post">how can i send a jquery object via post</a></li>
                 <li><a href="http://stackoverflow.com/questions/4255848/javascript-pass-object-via-post">javascript pass object via post</a></li>
