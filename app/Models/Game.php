@@ -58,20 +58,25 @@ class Game extends Model
 
 		if ($rates)
 		{
+			$rate_section .= '(';
 			foreach ($rates as $rate) 
 			{
-				if ($rate_section != '') $rate_section .= 'OR ';
+				if ($rate_section != '(') $rate_section .= ' OR ';
 				$rate_section .= "(rate >= " . $rate . " AND " . "rate < " . ($rate + 1) . ") ";
 			}
+			$rate_section .= ')';
 		}
 
 		if ($categories) 
 		{
+			if ($rate_section != '') $category_section .= ' AND ';
+			$category_section .= '(';
 			foreach ($categories as $category) 
 			{
-				if ($category_section != '' || $rate_section != '') $category_section .= 'OR ';
+				if ($category_section != '(' && $category_section != ' AND (' ) $category_section .= 'OR ';
 				$category_section .= 'name = "' . $category . '" ';
 			}
+			$category_section .= ')';
 		}
     	$games = Model::raw('SELECT DISTINCT games.id, title, abstract, info, rate, comments, big_image, small_image FROM (SELECT games.id as game_id, COUNT(comments.game_id) as comments, AVG(comments.rate) as rate FROM comments RIGHT OUTER JOIN games ON games.id = comments.game_id GROUP BY games.id) as t1 RIGHT OUTER JOIN games on t1.game_id = games.id JOIN games_categories JOIN categories ON games_categories.category_id = categories.id' . ($rate_section || $category_section ? ' WHERE ' : '') . $rate_section . $category_section . 'ORDER BY games.id');
 		
@@ -94,20 +99,25 @@ class Game extends Model
 
 		if ($rates)
 		{
+			$rate_section .= '(';
 			foreach ($rates as $rate) 
 			{
-				if ($rate_section != '') $rate_section .= 'OR ';
+				if ($rate_section != '(') $rate_section .= ' OR ';
 				$rate_section .= "(rate >= " . $rate . " AND " . "rate < " . ($rate + 1) . ") ";
 			}
+			$rate_section .= ')';
 		}
 
 		if ($categories) 
 		{
+			if ($rate_section != '') $category_section .= ' AND ';
+			$category_section .= '(';
 			foreach ($categories as $category) 
 			{
-				if ($category_section != '' || $rate_section != '') $category_section .= 'OR ';
+				if ($category_section != '(' && $category_section != ' AND (' ) $category_section .= 'OR ';
 				$category_section .= 'name = "' . $category . '" ';
 			}
+			$category_section .= ')';
 		}
 		$res = Model::raw('SELECT DISTINCT count(DISTINCT games.id) as counts FROM (SELECT games.id as game_id, COUNT(comments.game_id) as comments, AVG(comments.rate) as rate FROM comments RIGHT OUTER JOIN games ON games.id = comments.game_id GROUP BY games.id) as t1 RIGHT OUTER JOIN games on t1.game_id = games.id JOIN games_categories JOIN categories ON games_categories.category_id = categories.id' . ($rate_section || $category_section ? ' WHERE ' : '') . $rate_section . $category_section . 'ORDER BY games.id');
 		return $res[0]->getCounts();
